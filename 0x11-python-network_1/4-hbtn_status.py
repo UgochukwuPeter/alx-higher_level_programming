@@ -1,12 +1,10 @@
 #!/usr/bin/python3
-"""my http request module"""
+"""Script that fetches https://alx-intranet.hbtn.io/status."""
 import requests
 
 
-if __name__ == '__main__':
-    """my request http://url function"""
-    url = 'https://intranet.hbtn.io/status'
-    req = requests.get(url)
-    print('Body response:')
-    print('\t- type:', type(req.text))
-    print('\t- content:', req.text)
+if __name__ == "__main__":
+    req = requests.get("https://alx-intranet.hbtn.io/status")
+    print("Body response:")
+    print("\t- type: {}".format(type(req.text)))
+    print("\t- content: {}".format(req.text))

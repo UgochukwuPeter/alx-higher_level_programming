@@ -1,21 +1,25 @@
 #!/usr/bin/python3
-"""a module requests http response"""
-import requests
+"""
+Script that takes in a letter and sends a POST request to
+http://0.0.0.0:5000/search_user with the letter as a parameter.
+
+sage: ./8-json_api.py <letter>
+  - The letter is sent as the value of the variable `q`.
+  - If no letter is provided, sends `q=""`.
+"""
 from sys import argv
+import requests
 
 
 if __name__ == "__main__":
-    url = 'http://0.0.0.0:5000/search_user'
-    if len(argv) == 1:
-        data = {"q": ""}
-    else:
-        data = {"q": argv[1]}
+    letter = "" if len(argv) == 1 else argv[1]
+    req = requests.post("http://0.0.0.0:5000/search_user", {"q": letter})
+
     try:
-        req = requests.post(url, data)
-        dic = req.json()
-        if dic:
-            print("[{}] {}".format(dic['id'], dic['name']))
-        else:
+        response = req.json()
+        if response == {}:
             print("No result")
+        else:
+            print("[{}] {}".format(response.get("id"), response.get("name")))
     except ValueError:
         print("Not a valid JSON")

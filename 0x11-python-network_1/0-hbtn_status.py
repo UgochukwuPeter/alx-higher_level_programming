@@ -1,18 +1,13 @@
 #!/usr/bin/python3
-"""my http request module"""
-import urllib.request
+"""Script that fetches https://alx-intranet.hbtn.io/status."""
+from urllib.request import Request, urlopen
 
 
-def reqst():
-    """my request http://url function"""
-    url = 'https://intranet.hbtn.io/status'
-    req = urllib.request.Request(url)
-    with urllib.request.urlopen(req) as response:
-        header = response.read()
-    print('Body response:')
-    print('\t- type:', type(header))
-    print('\t- content:', header)
-    print('\t- utf8 content:', header.decode('UTF-8'))
-
-if __name__ == '__main__':
-    reqst()
+if __name__ == "__main__":
+    req = Request("https://alx-intranet.hbtn.io/status")
+    with urlopen(req) as response:
+        body = response.read()
+        print("Body response:")
+        print("\t- type: {}".format(type(body)))
+        print("\t- content: {}".format(body))
+        print("\t- utf8 content: {}".format(body.decode("utf-8")))

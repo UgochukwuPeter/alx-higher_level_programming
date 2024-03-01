@@ -1,18 +1,22 @@
 #!/usr/bin/python3
-"""a module requests http response"""
-import requests
+"""
+Python script that takes 2 arguments in order to solve this challenge.
+
+Usage: ./100-github_commits.py <repository name> <repository owner>
+"""
 from sys import argv
+import requests
 
 
 if __name__ == "__main__":
-    url = "https://api.github.com/repos/{}/{}/commits"\
-        .format(argv[2], argv[1])
+    url = "https://api.github.com/repos/{}/{}/commits".format(argv[2], argv[1])
     req = requests.get(url)
-    if req.status_code == 200:
-        dic = req.json()
-        try:
-            for i in range(10):
-                a = dic[i]
-                print("{}: {}".format(a["sha"], a["commit"]["author"]["name"]))
-        except:
-            pass
+    commits = req.json()
+
+    try:
+        for index in range(10):
+            print("{}: {}".format(
+                commits[index].get("sha"),
+                commits[index].get("commit").get("author").get("name")))
+    except IndexError:
+        pass

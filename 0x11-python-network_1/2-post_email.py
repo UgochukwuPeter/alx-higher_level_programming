@@ -1,20 +1,19 @@
 #!/usr/bin/python3
-"""my http request module"""
-import urllib.request
-import urllib.parse
+"""
+Script that takes in a URL and an email, sends a POST request to the passed
+URL with the email as a parameter, and displays the body of the response
+(decoded in utf-8).
+"""
 from sys import argv
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
 
-def reqst():
-    """my request http://url function"""
+if __name__ == "__main__":
     url = argv[1]
-    value = {'email': argv[2]}
-    data = urllib.parse.urlencode(value)
-    data = data.encode('ascii')
-    req = urllib.request.Request(url, data)
-    with urllib.request.urlopen(req) as response:
-        header = response.read()
-    print(header.decode('UTF-8'))
+    value = {"email": argv[2]}
+    data = urlencode(value).encode("ascii")
+    req = Request(url, data)
 
-if __name__ == '__main__':
-    reqst()
+    with urlopen(req) as response:
+        print(response.read().decode("utf-8", "replace"))
