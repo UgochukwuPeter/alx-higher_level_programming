@@ -1,13 +1,16 @@
 #!/usr/bin/python3
-"""
-Displays the value of the X-Request-Id variable
-found in the header of the response.
-"""
+"""my http request module"""
+import urllib.request
+from sys import argv
 
 
-if __name__ == "__main__":
-    import sys
-    import urllib.request
+def reqst():
+    """my request http://url function"""
+    url = argv[1]
+    req = urllib.request.Request(url)
+    with urllib.request.urlopen(req) as response:
+        header = response.info()
+    print(header.get('X-Request-Id'))
 
-    with urllib.request.urlopen(sys.argv[1]) as response:
-        print(response.headers["X-Request-Id"])
+if __name__ == '__main__':
+    reqst()

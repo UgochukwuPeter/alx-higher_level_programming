@@ -5,16 +5,18 @@ from sys import argv
 
 
 if __name__ == "__main__":
-    url = 'http://0.0.0.0:5000/search_user'
     if len(argv) == 1:
-        data = {"q": ""}
+        r2 = ""
     else:
-        data = {"q": argv[1]}
+        r2 = argv[1]
+    url = "https://swapi.co/api/people/?search={}".format(r2)
     try:
-        req = requests.post(url, data)
+        req = requests.get(url)
         dic = req.json()
         if dic:
-            print("[{}] {}".format(dic['id'], dic['name']))
+            print("Number of results:", dic["count"])
+            for i in dic["results"]:
+                print(i["name"])
         else:
             print("No result")
     except ValueError:
