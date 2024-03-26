@@ -1,4 +1,14 @@
 #!/usr/bin/node
-const fs = require('fs');
+// scrape a page and store in a file
+
 const request = require('request');
-request(process.argv[2]).pipe(fs.createWriteStream(process.argv[3]));
+const fs = require('fs');
+const requestURL = process.argv[2];
+const filename = process.argv[3];
+
+request(requestURL, (err, response, body) => {
+  if (err) throw err;
+  fs.writeFile(filename, body, (err) => {
+    if (err) throw err;
+  });
+});

@@ -1,15 +1,17 @@
 #!/usr/bin/node
+// prints all charaters in starwar movie
+
 const request = require('request');
-const url = 'https://swapi-api.hbtn.io/api/films/' + process.argv[2];
-request(url, function (error, response, body) {
-  if (!error) {
-    const characters = JSON.parse(body).characters;
-    characters.forEach((character) => {
-      request(character, function (error, response, body) {
-        if (!error) {
-          console.log(JSON.parse(body).name);
-        }
-      });
+const requestURL = 'https://swapi.co/api/films/' + process.argv[2];
+
+request(requestURL, (err, response, body) => {
+  if (err) throw err;
+  const dict = JSON.parse(body);
+  const characters = dict.characters;
+  characters.forEach(character => {
+    request(character, (error, response, data) => {
+      if (error) throw error;
+      console.log(JSON.parse(data).name);
     });
-  }
+  });
 });
