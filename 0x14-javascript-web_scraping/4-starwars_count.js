@@ -1,20 +1,20 @@
 #!/usr/bin/node
-// Number of films with the given character ID
-const request = require('request');
-let num = 0;
+// prints the number of movie that character “Wedge Antilles” is present
 
-request.get(process.argv[2], (error, response, body) => {
-  if (error) {
-    console.log(error);
-  } else {
-    const content = JSON.parse(body);
-    content.results.forEach((film) => {
-      film.characters.forEach((character) => {
-        if (character.includes(18)) {
-          num += 1;
-        }
-      });
+const request = require('request');
+const requestURL = process.argv[2];
+
+request(requestURL, (err, response, body) => {
+  if (err) throw err;
+  const dict = JSON.parse(body);
+  const results = dict.results;
+  let count = 0;
+  results.forEach(result => {
+    result.characters.forEach(character => {
+      if (character === 'https://swapi.co/api/people/18/') {
+        count++;
+      }
     });
-    console.log(num);
-  }
+  });
+  console.log(count);
 });

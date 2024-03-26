@@ -1,17 +1,14 @@
 #!/usr/bin/node
-// lorem ipsum
+// scrape a page and store in a file
 
 const request = require('request');
 const fs = require('fs');
+const requestURL = process.argv[2];
+const filename = process.argv[3];
 
-request.get(process.argv[2], (error, response, body) => {
-  if (error) {
-    console.log(error);
-  } else {
-    fs.writeFile(process.argv[3], body, 'utf-8', (error) => {
-      if (error) {
-        console.log(error);
-      }
-    });
-  }
+request(requestURL, (err, response, body) => {
+  if (err) throw err;
+  fs.writeFile(filename, body, (err) => {
+    if (err) throw err;
+  });
 });
